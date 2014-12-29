@@ -7,7 +7,7 @@
         {{target.host}}
     </li>
 </ul>
-
+<!--
 <h2>Responses</h2>
 <ul class="phones">
     <li ng-repeat="response in responses">
@@ -19,5 +19,12 @@
 <ul class="phones">
     <li ng-repeat="header in headers">
         {{header}}
+    </li>
+</ul>
+-->
+<h2>Jobs</h2>
+<ul class="phones">
+    <li ng-repeat="(key, desc) in jobs">
+        {{key}}::{{desc}}
     </li>
 </ul>
