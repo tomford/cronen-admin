@@ -13,14 +13,19 @@ angular.module('myApp.view1', ['ngRoute'])
     $scope.hello = "hello";
 
     $scope.responses = [];
+    $scope.headers = [];
 
-    $http.get('phones/phones.json').success(function(allUrls) {
-      $scope.targets = allUrls;
-      allUrls.map(function(url) {
+    $http.get('phones/phones.json').success(function(data) {
+      $scope.targets = data;
+      data.map(function(url) {
         var fullUrl = "http://" + url.host + ":" + url.port + "/" + url.urlExtension;
         console.log("URL: " + fullUrl);
-        $http.get(fullUrl).success(function (response) {
-          $scope.responses.push(response);
+        $http.get(fullUrl).success(function (data, status, headers, config) {
+          $scope.responses.push(data);
+          var url = config.url;
+          var host = config.url.match(/\/\/(.*?):/)[1];
+          var port = config.url.match(/\/\/.*?:(.*?)\//)[1];
+          $scope.headers.push(host.concat(port));
         })
       })
     });
