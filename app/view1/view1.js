@@ -11,7 +11,17 @@ angular.module('myApp.view1', ['ngRoute'])
 
 .controller('View1Ctrl', ['$scope', '$http', function($scope, $http) {
     $scope.hello = "hello";
-    $http.get('phones/phones.json').success(function(data) {
-      $scope.targets = data;
+
+    $scope.responses = [];
+
+    $http.get('phones/phones.json').success(function(allUrls) {
+      $scope.targets = allUrls;
+      allUrls.map(function(url) {
+        var fullUrl = "http://" + url.host + ":" + url.port + "/" + url.urlExtension;
+        console.log("URL: " + fullUrl);
+        $http.get(fullUrl).success(function (response) {
+          $scope.responses.push(response);
+        })
+      })
     });
 }]);

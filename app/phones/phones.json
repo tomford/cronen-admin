@@ -1,12 +1,12 @@
 [
   {
     "host": "localhost",
-    "port": 80,
-    "urlExtension": "/"
+    "port": 12345,
+    "urlExtension": "status"
   },
   {
-    "host": "anotherhost",
-    "port": 8080,
-    "urlExtension": "/target1"
+    "host": "localhost",
+    "port": 12345,
+    "urlExtension": "status"
   }
 ]
