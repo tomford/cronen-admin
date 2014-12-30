@@ -4,7 +4,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
+    templateUrl: 'static/view1/view1.html',
     controller: 'View1Ctrl'
   });
 }])
@@ -21,7 +21,7 @@ angular.module('myApp.view1', ['ngRoute'])
       return host.concat(port);
     };
 
-    $http.get('phones/phones.json').success(function(data) {
+    $http.get('static/phones/phones.json').success(function(data) {
 
       $scope.targets = data;
 
