@@ -21,17 +21,14 @@ angular.module('myApp.view1', ['ngRoute'])
       return host.concat(port);
     };
 
-    var serverUrl = "api/server";
-
-    $http.get(serverUrl).success(function(data) {
+    $http.get("api/server").success(function(data) {
 
       $scope.targets = data.objects;
 
       data.objects.map(function(url) {
         if(url.host && url.port) {
-          var fullUrl = "http://" + url.host + ":" + url.port + "/" + url.urlExtension;
-          console.log("URL: " + fullUrl);
 
+          var statusUri = "api/status/" + url.id;
           var jobKey = url.host.concat(url.port);
 
           $scope.jobs[jobKey] = {};
@@ -40,16 +37,11 @@ angular.module('myApp.view1', ['ngRoute'])
 
           $scope.jobs[jobKey].jobs = {};
 
-          $http.get(fullUrl).success(function (data, status, headers, config) {
+          $http.get(statusUri).success(function (data) {
             $scope.responses.push(data);
 
-            var url = config.url;
-            var host = config.url.match(/\/\/(.*?):/)[1];
-            var port = config.url.match(/\/\/.*?:(.*?)\//)[1];
-            $scope.headers.push(host.concat(port));
-
-            var jobKey = host.concat(port);
-            $scope.jobs[jobKey].jobs = data;
+            var jobKey = data.host.concat(data.port);
+            $scope.jobs[jobKey].jobs = data.jobs;
           })
         }
       })

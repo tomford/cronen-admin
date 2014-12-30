@@ -4,6 +4,8 @@ from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
 from flask import send_file, make_response, abort
 
+import requests
+
 from cronen_admin import app
 
 # routing for API endpoints (generated from the models designated as API_MODELS)
@@ -22,6 +24,16 @@ session = api_manager.session
 @app.route('/app')
 def basic_pages(**kwargs):
 	return make_response(open('cronen_admin/templates/index.html').read())
+
+@app.route('/api/status/<item_id>')
+def server_status(item_id):
+	server = session.query(Server).get(item_id)
+	url = "http://" + server.host + ":" + str(server.port) + "/status";
+	r = requests.get(url, headers={'Content-Type': 'application/json'})
+
+	response = "{ \"host\": " + "\"" + server.host + "\"," + " \"port\": " + str(server.port) + ", \"jobs\": " + r.text + "}"
+
+	return response
 
 # routing for CRUD-style endpoints
 # passes routing onto the angular frontend if the requested resource exists

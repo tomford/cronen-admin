@@ -29,7 +29,7 @@ def main():
 		create_db()
 
 		print "DB created!"
-	elif args.command == 'delete_db':
+	elif args.command == 'drop_db':
 		drop_db()
 
 		print "DB deleted!"
