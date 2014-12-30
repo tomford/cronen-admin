@@ -21,33 +21,37 @@ angular.module('myApp.view1', ['ngRoute'])
       return host.concat(port);
     };
 
-    $http.get('static/phones/phones.json').success(function(data) {
+    var serverUrl = "api/server";
 
-      $scope.targets = data;
+    $http.get(serverUrl).success(function(data) {
 
-      data.map(function(url) {
-        var fullUrl = "http://" + url.host + ":" + url.port + "/" + url.urlExtension;
-        console.log("URL: " + fullUrl);
+      $scope.targets = data.objects;
 
-        var jobKey = url.host.concat(url.port);
+      data.objects.map(function(url) {
+        if(url.host && url.port) {
+          var fullUrl = "http://" + url.host + ":" + url.port + "/" + url.urlExtension;
+          console.log("URL: " + fullUrl);
 
-        $scope.jobs[jobKey] = {};
-        $scope.jobs[jobKey].host = url.host;
-        $scope.jobs[jobKey].port = url.port;
+          var jobKey = url.host.concat(url.port);
 
-        $scope.jobs[jobKey].jobs = {};
+          $scope.jobs[jobKey] = {};
+          $scope.jobs[jobKey].host = url.host;
+          $scope.jobs[jobKey].port = url.port;
 
-        $http.get(fullUrl).success(function (data, status, headers, config) {
-          $scope.responses.push(data);
+          $scope.jobs[jobKey].jobs = {};
 
-          var url = config.url;
-          var host = config.url.match(/\/\/(.*?):/)[1];
-          var port = config.url.match(/\/\/.*?:(.*?)\//)[1];
-          $scope.headers.push(host.concat(port));
+          $http.get(fullUrl).success(function (data, status, headers, config) {
+            $scope.responses.push(data);
 
-          var jobKey = host.concat(port);
-          $scope.jobs[jobKey].jobs = data;
-        })
+            var url = config.url;
+            var host = config.url.match(/\/\/(.*?):/)[1];
+            var port = config.url.match(/\/\/.*?:(.*?)\//)[1];
+            $scope.headers.push(host.concat(port));
+
+            var jobKey = host.concat(port);
+            $scope.jobs[jobKey].jobs = data;
+          })
+        }
       })
     });
 }]);
