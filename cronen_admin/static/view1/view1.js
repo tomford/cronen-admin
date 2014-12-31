@@ -42,7 +42,7 @@ angular.module('myApp.view1', ['ngRoute'])
             _.map(data.jobs, function(jobData, jobName) {
               var thisJobKey = jobKey;
               if($scope.jobs[jobKey].jobName != "Pending") {
-                thisJobKey = jobKey + Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+                thisJobKey = jobKey + Math.floor(Math.random() * 9007199254740991);
               }
 
               $scope.jobs[thisJobKey] = {};
