@@ -19,17 +19,19 @@ angular.module('myApp.view1', ['ngRoute'])
 
     function jobKey(host, port) {
       return host.concat(port);
-    };
+    }
 
     $http.get("api/server").success(function(data) {
 
       $scope.targets = data.objects;
+      var urlKeyMapping = {};
 
       data.objects.map(function(url) {
         if(url.host && url.port) {
 
           var statusUri = "api/status/" + url.id;
           var jobKey = url.host.concat(url.port);
+          urlKeyMapping[statusUri] = jobKey;
 
           $scope.jobs[jobKey] = {};
           $scope.jobs[jobKey].host = url.host;
@@ -56,7 +58,15 @@ angular.module('myApp.view1', ['ngRoute'])
               $scope.jobs[thisJobKey].status = jobData.error;
             });
           })
+            .error(function(data, status, headers, config) {
+              var jobKey = urlKeyMapping[config.url];
+              $scope.jobs[jobKey].jobName = "FAILED: Status: " + status;
+          });
         }
-      })
+      });
+    })
+      .error(function(data, status) {
+        $scope.jobs["only"] = {};
+        $scope.jobs["only"].jobName = "ERROR: Failed to connect to API";
     });
 }]);
