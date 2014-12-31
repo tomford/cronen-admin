@@ -17,10 +17,6 @@ angular.module('myApp.view1', ['ngRoute'])
 
     $scope.jobs = {};
 
-    function jobKey(host, port) {
-      return host.concat(port);
-    }
-
     $http.get("api/server").success(function(data) {
 
       $scope.targets = data.objects;
@@ -38,15 +34,15 @@ angular.module('myApp.view1', ['ngRoute'])
           $scope.jobs[jobKey].port = url.port;
           $scope.jobs[jobKey].jobName = "Pending";
 
-          $http.get(statusUri).success(function (data) {
+          $http.get(statusUri).success(function (data, status, headers, config) {
             $scope.responses.push(data);
 
-            var jobKey = data.host.concat(data.port);
+            var jobKey = urlKeyMapping[config.url];
 
             _.map(data.jobs, function(jobData, jobName) {
               var thisJobKey = jobKey;
               if($scope.jobs[jobKey].jobName != "Pending") {
-                thisJobKey = jobKey + Math.floor(Math.random() * Number.MAX_VALUE);
+                thisJobKey = jobKey + Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
               }
 
               $scope.jobs[thisJobKey] = {};
