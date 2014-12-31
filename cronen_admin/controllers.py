@@ -13,8 +13,8 @@ from cronen_admin.core import api_manager
 from cronen_admin.models import *
 
 for model_name in app.config['API_MODELS']:
-	model_class = app.config['API_MODELS'][model_name]
-	api_manager.create_api(model_class, methods=['GET', 'POST', 'DELETE'])
+    model_class = app.config['API_MODELS'][model_name]
+    api_manager.create_api(model_class, methods=['GET', 'POST', 'DELETE'])
 
 session = api_manager.session
 
@@ -23,40 +23,30 @@ session = api_manager.session
 @app.route('/about')
 @app.route('/app')
 def basic_pages(**kwargs):
-	return make_response(open('cronen_admin/templates/index.html').read())
+    return make_response(open('cronen_admin/templates/index.html').read())
+
 
 @app.route('/api/status/<item_id>')
 def server_status(item_id):
-	server = session.query(Server).get(item_id)
-	url = "http://" + server.host + ":" + str(server.port) + "/status";
-	r = requests.get(url, headers={'Content-Type': 'application/json'})
+    server = session.query(Server).get(item_id)
+    url = "http://" + server.host + ":" + str(server.port) + "/status"
+    r = requests.get(url, headers={'Content-Type': 'application/json'})
 
-	response = "{ \"host\": " + "\"" + server.host + "\"," + " \"port\": " + str(server.port) + ", \"jobs\": " + r.text + "}"
+    if r.response != 200:
+        return render_template('404.html'), 404
 
-	return response
+    response = "{ \"host\": " + "\"" + server.host + "\"," + " \"port\": " + str(server.port) + \
+               ", \"jobs\": " + r.text + "}"
 
-# routing for CRUD-style endpoints
-# passes routing onto the angular frontend if the requested resource exists
-from sqlalchemy.sql import exists
+    return response
 
-crud_url_models = app.config['CRUD_URL_MODELS']
-
-@app.route('/<model_name>/')
-@app.route('/<model_name>/<item_id>')
-def rest_pages(model_name, item_id=None):
-	if model_name in crud_url_models:
-		model_class = crud_url_models[model_name]
-		if item_id is None or session.query(exists().where(
-						model_class.id == item_id)).scalar():
-			return make_response(open(
-				'angular_flask/templates/index.html').read())
-	abort(404)
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')
 def favicon():
-	return send_from_directory(os.path.join(app.root_path, 'static'),
-							   'img/favicon.ico')
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'img/favicon.ico')
+
 
 @app.errorhandler(404)
 def page_not_found(e):
