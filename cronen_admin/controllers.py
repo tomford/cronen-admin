@@ -14,7 +14,7 @@ from cronen_admin.models import *
 
 for model_name in app.config['API_MODELS']:
 	model_class = app.config['API_MODELS'][model_name]
-	api_manager.create_api(model_class, methods=['GET', 'POST'])
+	api_manager.create_api(model_class, methods=['GET', 'POST', 'DELETE'])
 
 session = api_manager.session
 

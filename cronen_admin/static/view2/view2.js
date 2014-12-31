@@ -22,7 +22,7 @@ angular.module('myApp.view2', ['ngRoute'])
     $scope.addServer = {};
     $scope.addServer.hostname = '(hostname)';
     $scope.addServer.port = '(port)';
-    $scope.addServer.submit = function(item, event) {
+    $scope.addServer.submit = function() {
 
       var addServerUri = 'api/server';
       var payload = {
@@ -35,6 +35,17 @@ angular.module('myApp.view2', ['ngRoute'])
       $http.post(addServerUri, payload).success(function (data) {
         refreshServerList();
       })};
+
+    $scope.removeServer = {};
+    $scope.removeServer.submit = function(item) {
+
+      var removeServerUri = 'api/server/' + item.id;
+      console.log("DELETE " + removeServerUri);
+
+      $http.delete(removeServerUri).success(function (data) {
+        refreshServerList();
+      });
+    };
 
     refreshServerList();
   }]);

@@ -4,6 +4,7 @@
     <th>Server Id</th>
     <th>Host</th>
     <th>Port</th>
+    <th>DELETE</th>
   </tr>
 
   <tr ng-repeat="server in servers">
@@ -11,14 +12,17 @@
     <td>{{ server.id }}</td>
     <td>{{ server.host }}</td>
     <td>{{ server.port }}</td>
+    <td><button ng-click="removeServer.submit(server)">X</button></td>
   </tr>
 </table>
 
+<p><strong>Add server:</strong>
 <form name="addServerForm" class="my-form">
   hostname: <input name="hostname" ng-model="addServer.hostname" required />
   port:  <input name="port" ng-model="addServer.port" required />
   <button ng-click="addServer.submit()">Add server</button>
 </form>
+</p>
 
 <p>
   Hostname: {{addServer.hostname}}
