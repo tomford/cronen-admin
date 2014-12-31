@@ -9,7 +9,7 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$scope', '$http', function($scope, $http) {
+.controller('View1Ctrl', ['$scope', '$http', '_', function($scope, $http, _) {
     $scope.hello = "hello";
 
     $scope.responses = [];
@@ -34,14 +34,27 @@ angular.module('myApp.view1', ['ngRoute'])
           $scope.jobs[jobKey] = {};
           $scope.jobs[jobKey].host = url.host;
           $scope.jobs[jobKey].port = url.port;
-
-          $scope.jobs[jobKey].jobs = {};
+          $scope.jobs[jobKey].jobName = "Pending";
 
           $http.get(statusUri).success(function (data) {
             $scope.responses.push(data);
 
             var jobKey = data.host.concat(data.port);
-            $scope.jobs[jobKey].jobs = data.jobs;
+
+            _.map(data.jobs, function(jobData, jobName) {
+              var thisJobKey = jobKey;
+              if($scope.jobs[jobKey].jobName != "Pending") {
+                thisJobKey = jobKey + Math.floor(Math.random() * Number.MAX_VALUE);
+              }
+
+              $scope.jobs[thisJobKey] = {};
+              $scope.jobs[thisJobKey].host = data.host;
+              $scope.jobs[thisJobKey].port = data.port;
+              $scope.jobs[thisJobKey].jobName = jobName;
+              $scope.jobs[thisJobKey].startTime = jobData.start_time;
+              $scope.jobs[thisJobKey].endTime = jobData.end_time;
+              $scope.jobs[thisJobKey].status = jobData.error;
+            });
           })
         }
       })

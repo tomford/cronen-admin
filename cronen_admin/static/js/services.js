@@ -1,8 +1,4 @@
-var phonecatServices = angular.module('phonecatServices', ['ngResource']);
-
-phonecatServices.factory('Phone', ['$resource',
-  function($resource){
-    return $resource('phones/phones.json', {}, {
-      query: {method:'GET'}
-    });
-  }]);
+var underscore = angular.module('underscore', []);
+underscore.factory('_', function() {
+  return window._; // assumes underscore has already been loaded on the page
+});

@@ -1,30 +1,31 @@
 <p>This is the partial for view 1.</p>
 <p>{{hello}}</p>
 
-<h2>Targets</h2>
-<ul class="phones">
-    <li ng-repeat="target in targets">
-        {{target.host}}
-    </li>
-</ul>
-<!--
-<h2>Responses</h2>
-<ul class="phones">
-    <li ng-repeat="response in responses">
-        {{response}}
-    </li>
-</ul>
+<h2>Jobs table</h2>
+<table>
+    <tr>
+        <th>Host</th>
+        <th>Port</th>
+        <th>Job name</th>
+        <th>Start time</th>
+        <th>End time</th>
+        <th>Status</th>
+    </tr>
 
-<h2>Headers</h2>
-<ul class="phones">
-    <li ng-repeat="header in headers">
-        {{header}}
-    </li>
-</ul>
--->
-<h2>Jobs</h2>
-<ul class="phones">
-    <li ng-repeat="(key, desc) in jobs">
-        {{key}}::{{desc}}
-    </li>
+    <tr ng-repeat="(key, desc) in jobs">
+
+        <td>{{ desc.host }}</td>
+        <td>{{ desc.port }}</td>
+        <td>{{ desc.jobName }}</td>
+        <td>{{ desc.startTime }}</td>
+        <td>{{ desc.endTime }}</td>
+        <td>{{ desc.status }}</td>
+    </tr>
+</table>
+
+
+<h2>Debug</h2>
+<li ng-repeat="(key, desc) in jobs">
+    {{key}}::{{desc}}
+</li>
 </ul>
