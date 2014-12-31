@@ -1,12 +1,9 @@
 import os
 
-from flask import Flask, request, Response
-from flask import render_template, url_for, redirect, send_from_directory
-from flask import send_file, make_response, abort
+from flask import render_template, send_from_directory
+from flask import make_response
 
-import requests
-
-from cronen_admin import app
+from requests import get, ConnectionError, HTTPError
 
 # routing for API endpoints (generated from the models designated as API_MODELS)
 from cronen_admin.core import api_manager
@@ -30,15 +27,18 @@ def basic_pages(**kwargs):
 def server_status(item_id):
     server = session.query(Server).get(item_id)
     url = "http://" + server.host + ":" + str(server.port) + "/status"
-    r = requests.get(url, headers={'Content-Type': 'application/json'})
+    try:
+        r = get(url, headers={'Content-Type': 'application/json'})
 
-    if r.response != 200:
-        return render_template('404.html'), 404
+        if r.status_code != 200:
+            return_page_not_found()
 
-    response = "{ \"host\": " + "\"" + server.host + "\"," + " \"port\": " + str(server.port) + \
+        response = "{ \"host\": " + "\"" + server.host + "\"," + " \"port\": " + str(server.port) + \
                ", \"jobs\": " + r.text + "}"
 
-    return response
+        return response
+    except (ConnectionError, HTTPError):
+        return return_page_not_found()
 
 
 # special file handlers and error handlers
@@ -50,7 +50,7 @@ def favicon():
 
 @app.errorhandler(404)
 def page_not_found(e):
+    return_page_not_found()
+
+def return_page_not_found():
     return render_template('404.html'), 404
-
-
-
