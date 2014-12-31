@@ -1,4 +1,30 @@
-<p>This is the partial for view 2.</p>
+<h2>Servers table</h2>
+<table>
+  <tr>
+    <th>Server Id</th>
+    <th>Host</th>
+    <th>Port</th>
+  </tr>
+
+  <tr ng-repeat="server in servers">
+
+    <td>{{ server.id }}</td>
+    <td>{{ server.host }}</td>
+    <td>{{ server.port }}</td>
+  </tr>
+</table>
+
+<form name="addServerForm" class="my-form">
+  hostname: <input name="hostname" ng-model="addServer.hostname" required />
+  port:  <input name="port" ng-model="addServer.port" required />
+  <button ng-click="addServer.submit()">Add server</button>
+</form>
+
+<p>
+  Hostname: {{addServer.hostname}}
+  Port: {{addServer.port}}
+</p>
+
 <p>
   Showing of 'interpolate' filter:
   {{ 'Current version is v%VERSION%.' | interpolate }}
