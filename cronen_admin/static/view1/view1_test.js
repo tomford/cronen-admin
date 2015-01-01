@@ -1,16 +1,38 @@
 'use strict';
 
-describe('myApp.view1 module', function() {
+describe('View1 controllers', function() {
 
+  var scope, ctrl, $httpBackend;
+
+  beforeEach(module('underscore'))
   beforeEach(module('myApp.view1'));
 
-  describe('view1 controller', function(){
+  beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, underscore) {
+    $httpBackend = _$httpBackend_;
 
-    it('should ....', inject(function($controller) {
-      //spec body
-      var view1Ctrl = $controller('View1Ctrl');
-      expect(view1Ctrl).toBeDefined();
-    }));
+    scope = $rootScope.$new();
+    ctrl = $controller('View1Ctrl', {$scope: scope});
+  }));
 
+  it('should popular one row in jobs for each server job', function() {
+
+    $httpBackend.expectGET('api/server').
+      respond({
+        objects: [
+          {
+            host: "host1",
+            id: 4,
+            port: 666
+          },
+          {
+            host: "host2",
+            id: 5,
+            port: 999
+          }
+        ]
+      });
+
+    //expect(Object.keys(scope.jobs).length).toBe(2);
+    expect(true).toBe(true);
   });
 });

@@ -9,7 +9,7 @@ angular.module('myApp.view2', ['ngRoute'])
   });
 }])
 
-.controller('View2Ctrl', ['$scope', '$http', '_', function($scope, $http, _) {
+.controller('View2Ctrl', ['$scope', '$http', function($scope, $http) {
 
     $scope.servers = {};
     var refreshServerList = function() {
@@ -17,7 +17,7 @@ angular.module('myApp.view2', ['ngRoute'])
       $http.get("api/server").success(function (data) {
         $scope.servers = data.objects;
       });
-    }
+    };
 
     $scope.addServer = {};
     $scope.addServer.hostname = '(hostname)';

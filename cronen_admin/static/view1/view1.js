@@ -9,17 +9,12 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$scope', '$http', '_', function($scope, $http, _) {
-    $scope.hello = "hello";
-
-    $scope.responses = [];
-    $scope.headers = [];
+.controller('View1Ctrl', ['$scope', '$http', 'underscore', function($scope, $http, underscore) {
 
     $scope.jobs = {};
 
     $http.get("api/server").success(function(data) {
 
-      $scope.targets = data.objects;
       var urlKeyMapping = {};
 
       data.objects.map(function(url) {
@@ -35,11 +30,10 @@ angular.module('myApp.view1', ['ngRoute'])
           $scope.jobs[jobKey].jobName = "Pending";
 
           $http.get(statusUri).success(function (data, status, headers, config) {
-            $scope.responses.push(data);
 
             var jobKey = urlKeyMapping[config.url];
 
-            _.map(data.jobs, function(jobData, jobName) {
+            underscore.map(data.jobs, function(jobData, jobName) {
               var thisJobKey = jobKey;
               if($scope.jobs[jobKey].jobName != "Pending") {
                 thisJobKey = jobKey + Math.floor(Math.random() * 9007199254740991);
