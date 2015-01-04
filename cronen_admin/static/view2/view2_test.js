@@ -22,7 +22,7 @@ describe('myApp.view2 module', function() {
     ctrl = $controller('View2Ctrl', {$scope: scope});
   }));
 
-  it('should popular one server entry for each server returned from the server-side', function() {
+  it('should populate one server entry for each server returned from the server-side', function() {
 
     $httpBackend.expectGET('api/server').
       respond({
@@ -60,9 +60,9 @@ describe('myApp.view2 module', function() {
     expect(scope.servers).toEqualData(expectedServers);
   });
 
-  it('should send add a newly added server to the list of servers', function() {
+  it('should call POST when adding a new server and get the list of servers again', function() {
 
-    scope.addServer.hostname = "ahost";
+    scope.addServer.hostname = "aNewHost";
     scope.addServer.port = 1234;
 
     $httpBackend.expectGET('api/server').respond({
@@ -72,7 +72,7 @@ describe('myApp.view2 module', function() {
     scope.addServer.submit();
 
     var expectedPostbody = {
-      host: "ahost",
+      host: "aNewHost",
       port: 1234
     };
 
@@ -80,24 +80,33 @@ describe('myApp.view2 module', function() {
 
     $httpBackend.expectGET('api/server').
       respond({
+        objects: []
+      });
+
+    $httpBackend.flush();
+  });
+
+  it('should call DELETE when a server is removed', function() {
+
+    $httpBackend.expectGET('api/server').
+      respond({
+        objects: []
+      });
+
+    scope.removeServer.submit({ id: 4 });
+
+    $httpBackend.expectDELETE('api/server/4').respond(204, '');
+
+    $httpBackend.expectGET('api/server').
+      respond({
         objects: [
           {
-            host: "ahost",
-            id: 1,
-            port: 1234
+            host: "server2",
+            id: 5,
+            port: 999
           }
         ]});
 
     $httpBackend.flush();
-
-    var expectedServers = [
-      {
-        "host": "ahost",
-        "port": 1234,
-        "id": 1
-      }
-    ];
-
-    expect(scope.servers).toEqualData(expectedServers);
   });
 });
