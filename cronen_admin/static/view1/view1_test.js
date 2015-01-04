@@ -23,7 +23,7 @@ describe('View1 controllers', function() {
     ctrl = $controller('View1Ctrl', {$scope: scope});
   }));
 
-  it('should popular one row in jobs for a server with one job', function() {
+  it('should populate one row in jobs for a server with one job', function() {
 
     $httpBackend.expectGET('api/server').
       respond({
@@ -61,12 +61,10 @@ describe('View1 controllers', function() {
   });
 
   function findJobs(jobName) {
-    return _.filter(scope.jobs, function (job) { return job.jobName = 'hello-job' });
+    return _.filter(scope.jobs, function (job) { return job.jobName == jobName });
   }
 
-  it('should popular two rows in jobs for a server with two jobs', function() {
-
-    debugger;
+  it('should populate two rows in jobs for a server with two jobs', function() {
 
     $httpBackend.expectGET('api/server').
       respond({
@@ -111,15 +109,15 @@ describe('View1 controllers', function() {
       "status": "Broken"};
 
     var helloJob = findJobs("hello-job")[0];
-    var goodbyeJob = findJobs("goodbye-job")[0][0];
+    var goodbyeJob = findJobs("goodbye-job")[0];
+
+    console.log(goodbyeJob);
 
     expect(helloJob).toEqualData(expectedHelloRow);
     expect(goodbyeJob).toEqualData(expectedGoodbyeRow);
   });
 
-  it('should popular two rows in jobs for twos servers each with one jobs', function() {
-
-    debugger;
+  it('should populate two rows in jobs for two servers each with one job', function() {
 
     $httpBackend.expectGET('api/server').
       respond({
@@ -132,7 +130,7 @@ describe('View1 controllers', function() {
           {
             host: "otherhost",
             id: 5,
-            port: 666
+            port: 667
           }
         ]
       });
@@ -151,7 +149,7 @@ describe('View1 controllers', function() {
         "host": "otherhost",
         "port": 667,
         "jobs": {
-          "hello-job": {
+          "goodbye-job": {
             "start_time": "2016-06-06 16:30", "end_time": "2016-06-08 17:35", "error": "Broken"}
         }});
 
@@ -176,8 +174,8 @@ describe('View1 controllers', function() {
       "status": "Broken"};
 
     var helloJob = findJobs("hello-job")[0];
-    var goodbyeJob = findJobs("goodbye-job")[0][0];
-
+    var goodbyeJob = findJobs("goodbye-job")[0];
+    
     expect(helloJob).toEqualData(expectedHelloRow);
     expect(goodbyeJob).toEqualData(expectedGoodbyeRow);
   });
