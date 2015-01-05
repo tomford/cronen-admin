@@ -10,7 +10,6 @@ describe('my app', function() {
     expect(browser.getLocationAbsUrl()).toMatch("/view1");
   });
 
-
   describe('view1', function() {
 
     beforeEach(function() {
@@ -19,13 +18,12 @@ describe('my app', function() {
 
 
     it('should render view1 when user navigates to /view1', function() {
-      expect(element.all(by.css('[ng-view] p')).first().getText()).
-        toMatch(/partial for view 1/);
+      expect(element.all(by.css('h2')).first().getText()).
+        toMatch(/Jobs table/);
     });
 
   });
-
-
+/*
   describe('view2', function() {
 
     beforeEach(function() {
@@ -37,6 +35,6 @@ describe('my app', function() {
       expect(element.all(by.css('[ng-view] p')).first().getText()).
         toMatch(/partial for view 2/);
     });
-
   });
+*/
 });

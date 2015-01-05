@@ -19,6 +19,7 @@ session = api_manager.session
 @app.route('/')
 @app.route('/about')
 @app.route('/app')
+@app.route('/index.html')
 def basic_pages(**kwargs):
     return make_response(open('cronen_admin/templates/index.html').read())
 
