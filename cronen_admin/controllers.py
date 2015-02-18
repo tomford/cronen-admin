@@ -23,12 +23,13 @@ session = api_manager.session
 def basic_pages(**kwargs):
     return make_response(open('cronen_admin/templates/index.html').read())
 
-
 @app.route('/api/status/<item_id>')
 def server_status(item_id):
-    server = session.query(Server).get(item_id)
-    url = "http://" + server.host + ":" + str(server.port) + "/status"
+
     try:
+        server = session.query(Server).get(item_id)
+        url = "http://" + server.host + ":" + str(server.port) + "/status"
+
         r = get(url, headers={'Content-Type': 'application/json'})
 
         if r.status_code != 200:
@@ -38,7 +39,7 @@ def server_status(item_id):
                ", \"jobs\": " + r.text + "}"
 
         return response
-    except (ConnectionError, HTTPError):
+    except (ConnectionError, HTTPError, AttributeError):
         return return_page_not_found()
 
 
