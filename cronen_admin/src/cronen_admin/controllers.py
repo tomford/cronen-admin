@@ -21,7 +21,7 @@ session = api_manager.session
 @app.route('/app')
 @app.route('/index.html')
 def basic_pages(**kwargs):
-    return make_response(open('cronen_admin/static/index.html').read())
+    return make_response(open(os.path.join(app.root_path, 'static/index.html')).read())
 
 @app.route('/api/status/<item_id>')
 def server_status(item_id):
@@ -56,3 +56,5 @@ def page_not_found(e):
 
 def return_page_not_found():
     return render_template('404.html'), 404
+
+print app.root_path

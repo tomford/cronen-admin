@@ -4,14 +4,15 @@ module.exports = function(config){
     basePath : './',
 
     files : [
-      'static/bower_components/angular/angular.js',
-      'static/bower_components/angular-route/angular-route.js',
-      'static/bower_components/angular-mocks/angular-mocks.js',
-      'static/bower_components/underscore/underscore.js',
-      'static/components/**/*.js',
-      'static/js/**/*.js',
-      'static/app.js',
-      'static/view*/**/*.js'
+      'src/cronen_admin/static/bower_components/angular/angular.js',
+      'src/cronen_admin/static/bower_components/angular-route/angular-route.js',
+      'src/cronen_admin/static/bower_components/angular-mocks/angular-mocks.js',
+      'src/cronen_admin/static/bower_components/underscore/underscore.js',
+      'src/cronen_admin/static/components/**/*.js',
+      'src/cronen_admin/static/js/**/*.js',
+      'src/cronen_admin/static/app.js',
+      'src/cronen_admin/static/view*/**/*.js',
+      'test/static/view*/*.js'
     ],
 
     autoWatch : true,
