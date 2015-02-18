@@ -21,7 +21,7 @@ session = api_manager.session
 @app.route('/app')
 @app.route('/index.html')
 def basic_pages(**kwargs):
-    return make_response(open('cronen_admin/templates/index.html').read())
+    return make_response(open('cronen_admin/static/index.html').read())
 
 @app.route('/api/status/<item_id>')
 def server_status(item_id):
