@@ -23,7 +23,7 @@ describe('my app', function() {
     });
 
   });
-/*
+
   describe('view2', function() {
 
     beforeEach(function() {
@@ -32,9 +32,31 @@ describe('my app', function() {
 
 
     it('should render view2 when user navigates to /view2', function() {
-      expect(element.all(by.css('[ng-view] p')).first().getText()).
-        toMatch(/partial for view 2/);
+      expect(element.all(by.css('h2')).first().getText()).
+        toMatch(/Servers table/);
     });
   });
-*/
+
+  describe('server add and remove functionality', function() {
+
+    it('should allow servers to be added', function() {
+      browser.get('index.html#/view2');
+
+      var hostnameElem = element(by.model('addServer.hostname'));
+      var portElem = element(by.model('addServer.port'));
+      var addServerButton = element(by.id('addServerButton'));
+
+      hostnameElem.clear();
+      hostnameElem.sendKeys('localhost');
+      portElem.clear();
+      portElem.sendKeys(9000);
+
+      addServerButton.click();
+
+      var serverList = element.all(by.repeater('server in servers'));
+      expect(serverList.count()).toEqual(1);
+
+    });
+  });
+
 });
