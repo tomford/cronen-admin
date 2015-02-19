@@ -32,33 +32,17 @@ npm run test-single-run
 
 ### End to end testing
 
-* the configuration is found at `e2e-tests/protractor-conf.js`
-* the end-to-end tests are found in `e2e-tests/scenarios.js`
-
-Protractor simulates interaction with our web app and verifies that the application responds
-correctly. Therefore, our web server needs to be serving up the application, so that Protractor
-can interact with it.
+We need to drop/create the database since the e2e tests assume a clean database
 
 ```
 export PYTHONPATH=`pwd`/src
+python src/utility/manage.py drop_db
+python src/utility/manage.py create_db
 python src/utility/runserver.py
 npm run protractor
 ```
 
-In addition, since Protractor is built upon WebDriver we need to install this.  The angular-seed
-project comes with a predefined script to do this:
-
-```
-npm run update-webdriver
-```
-
-
-
 ## Updating Angular
-
-Previously we recommended that you merge in changes to angular-seed into your own fork of the project.
-Now that the angular framework library code and tools are acquired through package managers (npm and
-bower) you can use these tools instead to update the dependencies.
 
 You can update the tool dependencies by running:
 
