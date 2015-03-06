@@ -37,7 +37,7 @@ describe('my app', function() {
     });
   });
 
-  ddescribe('server status viewing', function() {
+  describe('server status viewing', function() {
 
     var removeServer = function(serverIndex) {
       var serverList = element.all(by.repeater('server in servers'));
@@ -92,6 +92,11 @@ describe('my app', function() {
       expect(serverHostname.getText()).toMatch(/myhost/);
       expect(serverPort.getText()).toMatch(/4321/);
       expect(serverStatus.getText()).toMatch(/FAILED/);
+
+      //Cleanup
+
+      browser.get('index.html#/view2');
+      removeServer(0);
     });
   });
 });
