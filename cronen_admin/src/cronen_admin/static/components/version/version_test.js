@@ -1,7 +1,7 @@
 'use strict';
 
-describe('myApp.version module', function() {
-  beforeEach(module('myApp.version'));
+describe('cronenAdmin.version module', function() {
+  beforeEach(module('cronenAdmin.version'));
 
   describe('version service', function() {
     it('should return current version', inject(function(version) {

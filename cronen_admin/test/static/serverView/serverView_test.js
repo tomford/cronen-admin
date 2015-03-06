@@ -1,10 +1,10 @@
 'use strict';
 
-describe('myApp.view2 module', function() {
+describe('serverView controller', function() {
 
   var scope, ctrl, $httpBackend, _;
 
-  beforeEach(module('myApp.view2'));
+  beforeEach(module('cronenAdmin.serverView'));
 
   beforeEach(function(){
     this.addMatchers({
@@ -19,7 +19,7 @@ describe('myApp.view2 module', function() {
 
     scope = $rootScope.$new();
     _ = underscore;
-    ctrl = $controller('View2Ctrl', {$scope: scope});
+    ctrl = $controller('ServerViewCtrl', {$scope: scope});
   }));
 
   it('should populate one server entry for each server returned from the server-side', function() {

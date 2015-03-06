@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('cronenAdmin.jobView', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'static/view1/view1.html',
-    controller: 'View1Ctrl'
+  $routeProvider.when('/jobView', {
+    templateUrl: 'static/jobView/jobView.html',
+    controller: 'JobViewCtrl'
   });
 }])
 
-.controller('View1Ctrl', ['$scope', '$http', 'underscore', function($scope, $http, underscore) {
+.controller('JobViewCtrl', ['$scope', '$http', 'underscore', function($scope, $http, underscore) {
 
     $scope.jobs = {};
 

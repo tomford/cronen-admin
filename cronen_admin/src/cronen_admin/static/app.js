@@ -1,14 +1,14 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+angular.module('cronenAdmin', [
   'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version',
+  'cronenAdmin.jobView',
+  'cronenAdmin.serverView',
+  'cronenAdmin.version',
   'underscore'
 ])
   .config(['$routeProvider', function($routeProvider) {
   $routeProvider
-    .otherwise({redirectTo: '/view1'});
+    .otherwise({redirectTo: '/jobView'});
 }]);

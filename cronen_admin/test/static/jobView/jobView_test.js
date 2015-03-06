@@ -1,11 +1,11 @@
 'use strict';
 
-describe('View1 controllers', function() {
+describe('JobView controller', function() {
 
   var scope, ctrl, $httpBackend, _;
 
   beforeEach(module('underscore'));
-  beforeEach(module('myApp.view1'));
+  beforeEach(module('cronenAdmin.jobView'));
 
   beforeEach(function(){
     this.addMatchers({
@@ -20,7 +20,7 @@ describe('View1 controllers', function() {
 
     scope = $rootScope.$new();
     _ = underscore;
-    ctrl = $controller('View1Ctrl', {$scope: scope});
+    ctrl = $controller('JobViewCtrl', {$scope: scope});
   }));
 
   it('should populate one row in jobs for a server with one job', function() {

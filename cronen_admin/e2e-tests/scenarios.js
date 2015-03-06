@@ -2,34 +2,34 @@
 
 describe('Cronen admin', function() {
 
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
+  it('should automatically redirect to /jobView when location hash/fragment is empty', function() {
     browser.get('index.html');
 
-    expect(browser.getLocationAbsUrl()).toMatch("/view1");
+    expect(browser.getLocationAbsUrl()).toMatch("/jobView");
   });
 
-  describe('view1', function() {
+  describe('jobView', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/view1');
+      browser.get('index.html#/jobView');
     });
 
 
-    it('should render view1 when user navigates to /view1', function() {
+    it('should render jobView when user navigates to /jobView', function() {
       expect(element.all(by.css('h2')).first().getText()).
         toMatch(/Jobs table/);
     });
 
   });
 
-  describe('view2', function() {
+  describe('serverView', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/view2');
+      browser.get('index.html#/serverView');
     });
 
 
-    it('should render view2 when user navigates to /view2', function() {
+    it('should render serverView when user navigates to /serverView', function() {
       expect(element.all(by.css('h2')).first().getText()).
         toMatch(/Servers table/);
     });
@@ -57,7 +57,7 @@ describe('Cronen admin', function() {
     };
 
     it('should allow servers to be added and then removed', function() {
-      browser.get('index.html#/view2');
+      browser.get('index.html#/serverView');
 
       addTestServer('localhost', 1234);
 
@@ -76,11 +76,11 @@ describe('Cronen admin', function() {
     });
 
     it('should allow the status of a server to be viewed', function() {
-      browser.get('index.html#/view2');
+      browser.get('index.html#/serverView');
 
       addTestServer('myhost', 4321);
 
-      browser.get('index.html#/view1');
+      browser.get('index.html#/jobView');
 
       var serverStatusList = element.all(by.repeater('(key, desc) in jobs'));
       var serverHostname = serverStatusList.first().all(by.tagName('td')).get(0);
@@ -93,7 +93,7 @@ describe('Cronen admin', function() {
 
       //Cleanup
 
-      browser.get('index.html#/view2');
+      browser.get('index.html#/serverView');
       removeServer(0);
     });
   });

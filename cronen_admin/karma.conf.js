@@ -11,8 +11,8 @@ module.exports = function(config){
       'src/cronen_admin/static/components/**/*.js',
       'src/cronen_admin/static/js/**/*.js',
       'src/cronen_admin/static/app.js',
-      'src/cronen_admin/static/view*/**/*.js',
-      'test/static/view*/*.js'
+      'src/cronen_admin/static/*View/**/*.js',
+      'test/static/*/*.js'
     ],
 
     autoWatch : true,
