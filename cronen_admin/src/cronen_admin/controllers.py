@@ -3,7 +3,7 @@ import os
 from flask import render_template, send_from_directory
 from flask import make_response
 
-from requests import get, ConnectionError, HTTPError
+from requests import get, RequestException
 
 # routing for API endpoints (generated from the models designated as API_MODELS)
 from cronen_admin.core import api_manager
@@ -27,7 +27,7 @@ def basic_pages(**kwargs):
 def server_status(item_id):
 
     try:
-        server = session.query(Server).get(item_id)
+        server = Server.query.get(item_id)
         url = "http://" + server.host + ":" + str(server.port) + "/status"
 
         r = get(url, headers={'Content-Type': 'application/json'})
@@ -36,12 +36,12 @@ def server_status(item_id):
             return_page_not_found()
 
         response = "{ \"host\": " + "\"" + server.host + "\"," + " \"port\": " + str(server.port) + \
-               ", \"jobs\": " + r.text + "}"
+            ", \"jobs\": " + r.text + "}"
 
         return response
-    except (ConnectionError, HTTPError, AttributeError):
-        return return_page_not_found()
 
+    except RequestException:
+        return_page_not_found()
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')
